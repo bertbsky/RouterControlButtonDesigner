@@ -1,0 +1,39 @@
+﻿<Window x:Class="RouterControlButtonDesigner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RouterControlButtonDesigner"
+        xmlns:commontools="clr-namespace:Skyline.Common.Tools;assembly=SLCommon"
+        xmlns:model="clr-namespace:Skyline.DataMiner.Client.RouterControl.UI.Model;assembly=SLRouterControl"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        Title="RouterControlButtonDesigner"
+        Height="500" Width="600">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/RouterControlButtonDesigner;component/CustomTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="20" commontools:GridEx.Rows="*;a" commontools:GridEx.Columns="*;*">
+        <Grid Grid.Column="0" Margin="20" DataContext="{Binding Input}">
+
+            <!-- add custom attributes to this Button -->
+            <Button Style="{DynamicResource {x:Static model:IOButtonBlock.InputStyleKey}}"
+                    Content="{Binding}"
+                    />
+
+        </Grid>
+        <Grid Grid.Column="1" Margin="20" DataContext="{Binding Output}">
+
+            <!-- add custom attributes to this Button -->
+            <Button Style="{DynamicResource {x:Static model:IOButtonBlock.OutputStyleKey}}"
+                    Content="{Binding}"
+                    />
+
+        </Grid>
+        <ContentPresenter Grid.Row="1" Grid.Column="0" Margin="20" ContentTemplate="{StaticResource EditorTemplate}" Content="{Binding Input}" />
+        <ContentPresenter Grid.Row="1" Grid.Column="1" Margin="20" ContentTemplate="{StaticResource EditorTemplate}" Content="{Binding Output}" />
+    </Grid>
+</Window>
