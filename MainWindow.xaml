@@ -22,13 +22,14 @@
             <!-- add custom attributes to this Button -->
             <Button Style="{DynamicResource {x:Static model:IOButtonBlock.InputStyleKey}}"
                     Content="{Binding}"
+                    ContentTemplate="{DynamicResource SkylineLogoTemplate}"
                     />
 
         </Grid>
         <Grid Grid.Column="1" Margin="20" DataContext="{Binding Output}">
 
             <!-- add custom attributes to this Button -->
-            <Button Style="{DynamicResource {x:Static model:IOButtonBlock.OutputStyleKey}}"
+            <Button Style="{DynamicResource CustomOutputButtonStyle}"
                     Content="{Binding}"
                     />
 

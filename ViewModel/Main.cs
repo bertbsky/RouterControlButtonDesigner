@@ -37,7 +37,7 @@ namespace RouterControlButtonDesigner.ViewModel
                 IsConnected = true,
                 IsLocked = true
             };
-            Output.Model.Values.AddRange(new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" });
+            Output.Model.Values.AddRange(new[] { "0", "1", "2", "3", "4", "5", null, "7", "abc", "9", "10" });
         }
     }
 }
