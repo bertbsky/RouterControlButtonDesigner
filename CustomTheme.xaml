@@ -71,6 +71,10 @@
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
 
+    <conv:OperatorConverter x:Key="NotEqualOperatorConverter" Operator="!=" />
+    <conv:OperatorConverter x:Key="LessThanOperatorConverter" Operator="&lt;" />
+    <commonconv:AreEqualConverter x:Key="AreEqualConverter" />
+
     <ControlTemplate x:Key="CustomOutputButtonTemplate" TargetType="{x:Type Button}">
         <Grid>
             <Grid.RowDefinitions>
@@ -142,6 +146,54 @@
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Margin" Value="2" /> <!-- to undo effect from base style -->
             </Trigger>
+
+            <!-- Example 1: The IO must be connected -->
+            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                <Setter Property="Background" Value="Cyan" />
+            </DataTrigger>
+
+            <!-- Example 2: The IO must be connected and Cell 4 needs to contain value "4" -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsConnected}" Value="True" />
+                    <Condition Binding="{Binding Model.CellDisplayValue[4]}" Value="4" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="Blue" />
+            </MultiDataTrigger>
+
+            <!-- Example 3: The IO must be connected and Cell 4 must not containvalue "4" -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsConnected}" Value="True" />
+                    <Condition Binding="{Binding Model.CellDisplayValue[4], Converter={StaticResource NotEqualOperatorConverter}, ConverterParameter=4}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="Turquoise" />
+            </MultiDataTrigger>
+
+            <!-- Example 4: The IO must be connected and Cell 4 needs to contain a numeric value lower than 8 -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsConnected}" Value="True" />
+                    <Condition Binding="{Binding Model.CellDisplayValue[4], Converter={StaticResource LessThanOperatorConverter}, ConverterParameter=3}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="Green" />
+            </MultiDataTrigger>
+
+            <!-- Example 5: The IO must be connected and Cells 4 and 5 need to contain the same value -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsConnected}" Value="True" />
+                    <Condition Value="True">
+                        <Condition.Binding>
+                            <MultiBinding Converter="{StaticResource AreEqualConverter}">
+                                <Binding Path="Model.CellDisplayValue[4]" />
+                                <Binding Path="Model.CellDisplayValue[5]" />
+                            </MultiBinding>
+                        </Condition.Binding>
+                    </Condition>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="Lime" />
+            </MultiDataTrigger>
         </Style.Triggers>
     </Style>
 

@@ -84,7 +84,7 @@ namespace RouterControlButtonDesigner.ViewModel
                 }
             }
         }
-                      
+
         private bool _isSelected;
         public bool IsSelected
         {
